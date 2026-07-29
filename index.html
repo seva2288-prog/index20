@@ -10,11 +10,9 @@
         .card{background:#1a1f2a;border-radius:12px;padding:16px;margin:8px 0}
         .row{display:flex;gap:8px}
         .row .field{flex:1}
-        input,select{width:100%;padding:10px;border-radius:8px;border:1px solid #2a3140;background:#0b0e14;color:#fff;font-size:16px}
+        input{width:100%;padding:10px;border-radius:8px;border:1px solid #2a3140;background:#0b0e14;color:#fff;font-size:16px}
         .btn{width:100%;padding:14px;border-radius:10px;border:0;font-weight:700;font-size:16px;cursor:pointer;background:#f7931a;color:#000}
-        .btn:active{transform:scale(.97)}
-        .btn-api{background:#3498db;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:10px;border:0;font-weight:700;font-size:16px;cursor:pointer;margin:4px 0}
-        .btn-api:disabled{opacity:.5}
+        .btn-api{background:#3498db;color:#fff;width:100%;padding:14px;border-radius:10px;border:0;font-weight:700;font-size:16px;cursor:pointer;margin:4px 0}
         .result{background:#1a2a3a;padding:10px;border-radius:8px;margin:8px 0;font-size:13px}
         .match{background:#1a1f2a;padding:4px 8px;border-radius:4px;margin:2px 0;display:flex;justify-content:space-between}
         .green{color:#2ecc71}
@@ -29,7 +27,6 @@
         .h2h-summary .item .num{font-weight:700;color:#f7931a}
         .spinner{display:inline-block;width:18px;height:18px;border:2px solid #fff;border-radius:50%;border-top-color:transparent;animation:spin .8s linear infinite}
         @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-        h1{color:#f7931a}
         .top-tabs{display:flex;gap:4px;margin:8px 0;border-bottom:1px solid #2a3140;padding-bottom:8px}
         .top-tab{padding:8px 16px;border-radius:8px;cursor:pointer;background:0;border:0;color:#888;font-size:14px}
         .top-tab.active{color:#f7931a;font-weight:700;border-bottom:2px solid #f7931a}
@@ -55,6 +52,7 @@
         .btn-save{background:#2ecc71;color:#000;flex:2}
         .btn-clear{background:#3a1a1a;color:#ff8a8a;flex:1}
         .btn-calc{background:#f7931a;color:#000}
+        label{color:#888;font-size:10px;display:block}
     </style>
 </head>
 <body>
@@ -72,14 +70,8 @@
 <div id="analysis" class="tab active">
     <div class="card">
         <div class="row">
-            <div class="field">
-                <label style="color:#888;font-size:10px">🏠 Хозяева</label>
-                <input type="number" id="homeGoals" value="0" min="0">
-            </div>
-            <div class="field">
-                <label style="color:#888;font-size:10px">✈️ Гости</label>
-                <input type="number" id="awayGoals" value="0" min="0">
-            </div>
+            <div class="field"><label>🏠 Хозяева</label><input type="number" id="homeGoals" value="0" min="0"></div>
+            <div class="field"><label>✈️ Гости</label><input type="number" id="awayGoals" value="0" min="0"></div>
         </div>
     </div>
     <div class="mode-wrap">
@@ -109,13 +101,6 @@
         </div>
         <div class="confidence-bar"><div class="fill" id="confidenceFill" style="width:0%"></div></div>
     </div>
-    <div class="card" id="xgCard" style="display:none;">
-        <div style="font-weight:700;color:#f7931a">🎯 xG</div>
-        <div class="row" style="margin-top:8px">
-            <div class="field" style="text-align:center"><span style="color:#2ecc71;font-size:18px;font-weight:700" id="xgHome">0.00</span><div style="color:#888;font-size:8px">xG Хозяев</div></div>
-            <div class="field" style="text-align:center"><span style="color:#3498db;font-size:18px;font-weight:700" id="xgAway">0.00</span><div style="color:#888;font-size:8px">xG Гостей</div></div>
-        </div>
-    </div>
 </div>
 
 <!-- ПОИСК -->
@@ -123,14 +108,8 @@
     <div class="card">
         <div style="font-weight:700;color:#f7931a;margin-bottom:8px">🔍 Поиск H2H</div>
         <div class="row">
-            <div class="field">
-                <label style="color:#888;font-size:10px">🏠 Хозяева</label>
-                <input type="text" id="homeTeam" placeholder="Real Madrid">
-            </div>
-            <div class="field">
-                <label style="color:#888;font-size:10px">✈️ Гости</label>
-                <input type="text" id="awayTeam" placeholder="Barcelona">
-            </div>
+            <div class="field"><label>🏠 Хозяева</label><input type="text" id="homeTeam" placeholder="Real Madrid"></div>
+            <div class="field"><label>✈️ Гости</label><input type="text" id="awayTeam" placeholder="Barcelona"></div>
         </div>
         <button class="btn-api" onclick="loadH2H()">📊 Загрузить H2H</button>
         <div id="h2hStatus" class="status">Введите команды</div>
@@ -175,8 +154,11 @@
 
 <script>
 // ================================================================
-// КВАНТУМ 2.3 AI — H2H ЧЕРЕЗ THESPORTSDB (БЕСПЛАТНО)
+// КВАНТУМ 2.3 AI — ВСЁ ЧЕРЕЗ ПРОКСИ
+// ПРОКСИ: https://oz-proxy-clean.onrender.com/api
 // ================================================================
+
+const PROXY = 'https://oz-proxy-clean.onrender.com/api';
 
 let state = {
     bets: JSON.parse(localStorage.getItem('quantum_bets') || '[]'),
@@ -237,7 +219,7 @@ function switchMode(mode, btn) {
 }
 
 // ================================================================
-// ГЛАВНАЯ ФУНКЦИЯ — H2H ЧЕРЕЗ THESPORTSDB
+// ГЛАВНАЯ ФУНКЦИЯ — H2H ЧЕРЕЗ ПРОКСИ (TheSportsDB)
 // ================================================================
 
 async function loadH2H() {
@@ -251,8 +233,8 @@ async function loadH2H() {
     results.innerHTML = '';
 
     try {
-        // TheSportsDB — бесплатно, без ключа
-        var url = 'https://www.thesportsdb.com/api/v1/json/3/eventspast.php?t=' + encodeURIComponent(home) + '&s=' + encodeURIComponent(away);
+        // Запрос через прокси
+        var url = PROXY + '/sportsdb/' + encodeURIComponent(home) + '/' + encodeURIComponent(away);
         var resp = await fetch(url);
         var data = await resp.json();
 
@@ -308,7 +290,6 @@ async function loadH2H() {
         status.textContent = '✅ Найдено ' + total + ' встреч (TheSportsDB)';
         showToast('✅ Загружено ' + total + ' матчей!', 'success');
 
-        // Автоматический расчёт
         if (state.h2hData.length > 0) calculate();
 
     } catch (e) {
@@ -483,13 +464,17 @@ function renderStats() {
     list.innerHTML = html;
 }
 
-// Инициализация
+// ================================================================
+// ИНИЦИАЛИЗАЦИЯ
+// ================================================================
+
 document.addEventListener('DOMContentLoaded', function() {
     renderStats();
     $('homeGoals').addEventListener('input', function() { updateSum(); if (safeNum(this.value) > 0 || safeNum($('awayGoals').value) > 0 || (state.h2hData && state.h2hData.length > 0)) calculate(); });
     $('awayGoals').addEventListener('input', function() { updateSum(); if (safeNum($('homeGoals').value) > 0 || safeNum(this.value) > 0 || (state.h2hData && state.h2hData.length > 0)) calculate(); });
     console.log('⚛️ КВАНТУМ 2.3 AI ЗАГРУЖЕН');
-    console.log('✅ H2H через TheSportsDB (бесплатно)');
+    console.log('✅ Прокси:', PROXY);
+    console.log('✅ H2H через прокси (TheSportsDB)');
 });
 </script>
 </body>
