@@ -8,7 +8,7 @@
         body{font-family:sans-serif;background:#0b0e14;color:#e0e0e0;max-width:480px;margin:0 auto;padding:16px}
         input{width:100%;padding:10px;border-radius:8px;border:1px solid #2a3140;background:#0b0e14;color:#fff;font-size:16px;margin:4px 0}
         .btn{width:100%;padding:14px;border-radius:10px;border:0;font-weight:700;font-size:16px;cursor:pointer;background:#f7931a;color:#000}
-        .result{background:#1a2a3a;padding:10px;border-radius:8px;margin:8px 0;font-size:13px;white-space:pre-wrap;word-break:break-all}
+        .result{background:#0b0e14;border:1px solid #2a3140;padding:10px;border-radius:8px;margin:8px 0;font-size:12px;max-height:400px;overflow-y:auto;white-space:pre-wrap;word-break:break-all}
         .error{color:#e74c3c}
         .success{color:#2ecc71}
         .info{color:#f1c40f}
@@ -16,13 +16,10 @@
 </head>
 <body>
     <h1 style="color:#f7931a">⚛️ Квантум — Тест</h1>
-
     <input type="text" id="home" value="Real Madrid">
     <input type="text" id="away" value="Barcelona">
-
     <button class="btn" onclick="loadH2H()">📊 Загрузить H2H</button>
-
-    <div id="log" class="result" style="background:#0b0e14;border:1px solid #2a3140;font-size:12px;max-height:400px;overflow-y:auto;">⏳ Нажми кнопку</div>
+    <div id="log" class="result">⏳ Нажми кнопку</div>
 
     <script>
         const PROXY = 'https://oz-proxy-clean.onrender.com/api';
@@ -43,13 +40,12 @@
             log('🔍 Начинаем загрузку...', 'info');
 
             try {
-                // Шаг 1: Поиск хозяев
-                log('📡 Запрос к прокси: ' + PROXY + '/football/teams?search=' + home, 'info');
+                log('📡 Запрос: ' + PROXY + '/football/teams?search=' + home, 'info');
                 var url1 = PROXY + '/football/teams?search=' + encodeURIComponent(home);
                 var resp1 = await fetch(url1);
-                log('📡 Статус ответа: ' + resp1.status, 'info');
+                log('📡 Статус: ' + resp1.status, 'info');
                 var data1 = await resp1.json();
-                log('📦 Получено ' + (data1.response ? data1.response.length : 0) + ' команд', 'info');
+                log('📦 Команд: ' + (data1.response ? data1.response.length : 0), 'info');
 
                 if (!data1.response || data1.response.length === 0) {
                     log('❌ Команда "' + home + '" не найдена', 'error');
@@ -57,15 +53,13 @@
                 }
 
                 var homeId = data1.response[0].team.id;
-                log('✅ ' + home + ' найден! ID: ' + homeId, 'success');
+                log('✅ ' + home + ' ID: ' + homeId, 'success');
 
-                // Шаг 2: Поиск гостей
-                log('📡 Запрос к прокси: ' + PROXY + '/football/teams?search=' + away, 'info');
                 var url2 = PROXY + '/football/teams?search=' + encodeURIComponent(away);
                 var resp2 = await fetch(url2);
-                log('📡 Статус ответа: ' + resp2.status, 'info');
+                log('📡 Статус: ' + resp2.status, 'info');
                 var data2 = await resp2.json();
-                log('📦 Получено ' + (data2.response ? data2.response.length : 0) + ' команд', 'info');
+                log('📦 Команд: ' + (data2.response ? data2.response.length : 0), 'info');
 
                 if (!data2.response || data2.response.length === 0) {
                     log('❌ Команда "' + away + '" не найдена', 'error');
@@ -73,22 +67,20 @@
                 }
 
                 var awayId = data2.response[0].team.id;
-                log('✅ ' + away + ' найден! ID: ' + awayId, 'success');
+                log('✅ ' + away + ' ID: ' + awayId, 'success');
 
-                // Шаг 3: Загрузка H2H
                 var url3 = PROXY + '/football/fixtures/headtohead?h2h=' + homeId + '-' + awayId + '&last=10';
-                log('📡 Запрос H2H: ' + url3, 'info');
+                log('📡 Запрос H2H...', 'info');
                 var resp3 = await fetch(url3);
-                log('📡 Статус ответа: ' + resp3.status, 'info');
+                log('📡 Статус: ' + resp3.status, 'info');
                 var data3 = await resp3.json();
-                log('📦 Получено ' + (data3.response ? data3.response.length : 0) + ' матчей', 'info');
+                log('📦 Матчей: ' + (data3.response ? data3.response.length : 0), 'info');
 
                 if (!data3.response || data3.response.length === 0) {
                     log('❌ Нет очных встреч', 'error');
                     return;
                 }
 
-                // Показываем результат
                 log('✅ Найдено ' + data3.response.length + ' матчей!', 'success');
                 for (var i = 0; i < data3.response.length; i++) {
                     var m = data3.response[i];
@@ -96,12 +88,10 @@
                     var as = m.goals.away || 0;
                     log('⚽ ' + m.teams.home.name + ' ' + hs + ':' + as + ' ' + m.teams.away.name, 'success');
                 }
-
-                log('✅ ЗАВЕРШЕНО!', 'success');
+                log('✅ ГОТОВО!', 'success');
 
             } catch (e) {
                 log('❌ ОШИБКА: ' + e.message, 'error');
-                log('📋 Стек: ' + e.stack, 'error');
                 console.error(e);
             }
         }
