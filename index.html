@@ -346,55 +346,13 @@
 // ================================================================
 
 const PROXY = 'https://oz-proxy-clean.onrender.com/api';
-const API_KEY = 'f7cd75bc295cdf52981b561a2215024c';
 
 const LEAGUES = {
     '39': { name: '🏴 АПЛ', oz: 65, avgGoals: 2.8, country: 'Англия', understat: 'EPL' },
     '140': { name: '🇪🇸 Ла Лига', oz: 60, avgGoals: 2.6, country: 'Испания', understat: 'La_liga' },
     '78': { name: '🇩🇪 Бундеслига', oz: 68, avgGoals: 3.0, country: 'Германия', understat: 'Bundesliga' },
     '135': { name: '🇮🇹 Серия А', oz: 62, avgGoals: 2.7, country: 'Италия', understat: 'Serie_A' },
-    '61': { name: '🇫🇷 Лига 1', oz: 58, avgGoals: 2.5, country: 'Франция', understat: 'Ligue_1' },
-    '88': { name: '🇳🇱 Эредивизи', oz: 72, avgGoals: 3.2, country: 'Нидерланды', understat: null },
-    '94': { name: '🇵🇹 Примейра', oz: 60, avgGoals: 2.6, country: 'Португалия', understat: null },
-    '2': { name: '🇷🇺 РПЛ', oz: 55, avgGoals: 2.2, country: 'Россия', understat: null },
-    '203': { name: '🇹🇷 Турецкая Суперлига', oz: 58, avgGoals: 2.5, country: 'Турция', understat: null },
-    '144': { name: '🇧🇪 Бельгийская Про-Лига', oz: 60, avgGoals: 2.6, country: 'Бельгия', understat: null },
-    '197': { name: '🇬🇷 Греческая Суперлига', oz: 52, avgGoals: 2.2, country: 'Греция', understat: null },
-    '119': { name: '🇨🇿 Чешская Первая Лига', oz: 55, avgGoals: 2.3, country: 'Чехия', understat: null },
-    '188': { name: '🇦🇹 Австрийская Бундеслига', oz: 58, avgGoals: 2.5, country: 'Австрия', understat: null },
-    '207': { name: '🇨🇭 Швейцарская Суперлига', oz: 56, avgGoals: 2.4, country: 'Швейцария', understat: null },
-    '95': { name: '🇺🇦 Украинская Премьер-лига', oz: 52, avgGoals: 2.2, country: 'Украина', understat: null },
-    '199': { name: '🇩🇰 Датская Суперлига', oz: 60, avgGoals: 2.6, country: 'Дания', understat: null },
-    '170': { name: '🇳🇴 Норвежская Элитсерия', oz: 65, avgGoals: 2.8, country: 'Норвегия', understat: null },
-    '48': { name: '🇸🇪 Шведский Аллсвенскан', oz: 62, avgGoals: 2.7, country: 'Швеция', understat: null },
-    '178': { name: '🇫🇮 Финская Вейккауслига', oz: 55, avgGoals: 2.3, country: 'Финляндия', understat: null },
-    '106': { name: '🇵🇱 Польская Экстракласа', oz: 54, avgGoals: 2.3, country: 'Польша', understat: null },
-    '148': { name: '🇭🇷 Хорватская Лига', oz: 55, avgGoals: 2.3, country: 'Хорватия', understat: null },
-    '250': { name: '🇷🇸 Сербская Суперлига', oz: 52, avgGoals: 2.1, country: 'Сербия', understat: null },
-    '176': { name: '🇧🇬 Болгарская Лига', oz: 50, avgGoals: 2.0, country: 'Болгария', understat: null },
-    '184': { name: '🇷🇴 Румынская Лига', oz: 52, avgGoals: 2.1, country: 'Румыния', understat: null },
-    '217': { name: '🇸🇰 Словацкая Лига', oz: 50, avgGoals: 2.0, country: 'Словакия', understat: null },
-    '202': { name: '🇸🇮 Словенская Лига', oz: 48, avgGoals: 1.9, country: 'Словения', understat: null },
-    '128': { name: '🇦🇷 Аргентинская Примера', oz: 58, avgGoals: 2.4, country: 'Аргентина', understat: null },
-    '145': { name: '🇺🇾 Уругвайская Примера', oz: 55, avgGoals: 2.3, country: 'Уругвай', understat: null },
-    '175': { name: '🇨🇴 Колумбийская Лига', oz: 54, avgGoals: 2.2, country: 'Колумбия', understat: null },
-    '163': { name: '🇨🇱 Чилийская Примера', oz: 55, avgGoals: 2.3, country: 'Чили', understat: null },
-    '185': { name: '🇵🇪 Перуанская Лига', oz: 52, avgGoals: 2.1, country: 'Перу', understat: null },
-    '191': { name: '🇪🇨 Эквадорская Лига', oz: 53, avgGoals: 2.2, country: 'Эквадор', understat: null },
-    '253': { name: '🇯🇵 J-Лига', oz: 60, avgGoals: 2.4, country: 'Япония', understat: null },
-    '249': { name: '🇰🇷 K-Лига', oz: 58, avgGoals: 2.3, country: 'Корея', understat: null },
-    '233': { name: '🇨🇳 Китайская Суперлига', oz: 55, avgGoals: 2.2, country: 'Китай', understat: null },
-    '240': { name: '🇦🇺 A-Лига', oz: 62, avgGoals: 2.6, country: 'Австралия', understat: null },
-    '255': { name: '🇸🇦 Саудовская Лига', oz: 58, avgGoals: 2.5, country: 'Саудовская Аравия', understat: null },
-    '258': { name: '🇦🇪 ОАЭ Про-Лига', oz: 56, avgGoals: 2.4, country: 'ОАЭ', understat: null },
-    '257': { name: '🇶🇦 Катарская Лига', oz: 55, avgGoals: 2.3, country: 'Катар', understat: null },
-    '262': { name: '🇪🇬 Египетская Лига', oz: 50, avgGoals: 2.0, country: 'Египет', understat: null },
-    '269': { name: '🇿🇦 ЮАР Премьер-Лига', oz: 48, avgGoals: 1.9, country: 'ЮАР', understat: null },
-    '264': { name: '🇲🇦 Марокканская Лига', oz: 50, avgGoals: 2.0, country: 'Марокко', understat: null },
-    '266': { name: '🇹🇳 Тунисская Лига', oz: 49, avgGoals: 1.9, country: 'Тунис', understat: null },
-    '98': { name: '🇧🇷 Бразильская Серия А', oz: 62, avgGoals: 2.5, country: 'Бразилия', understat: null },
-    '9': { name: '🇺🇸 MLS', oz: 68, avgGoals: 2.8, country: 'США', understat: null },
-    '1': { name: '🏆 ЛЧ', oz: 66, avgGoals: 2.8, country: 'Европа', understat: null }
+    '61': { name: '🇫🇷 Лига 1', oz: 58, avgGoals: 2.5, country: 'Франция', understat: 'Ligue_1' }
 };
 
 let state = {
@@ -403,11 +361,7 @@ let state = {
     currentMode: 'total',
     h2hData: null,
     isLoading: false,
-    understatData: null,
-    apiCalls: parseInt(localStorage.getItem('quantum_api_calls') || '0'),
-    lastReset: localStorage.getItem('quantum_reset') || '',
-    currentTab: 'analysis',
-    recentForm: {}
+    understatData: null
 };
 
 function $(id) { return document.getElementById(id); }
@@ -447,7 +401,7 @@ function switchTab(tab) {
     document.querySelectorAll('.top-tab').forEach(function(el) { el.classList.remove('active'); });
     document.querySelector('.top-tab[data-tab="' + tab + '"]').classList.add('active');
     if (tab === 'stats') { renderHistory(); renderStats(); renderDashboard(); renderChart(); renderInsights(); }
-    if (tab === 'settings') { renderSettingsLeagues(); updateAIStatus(); }
+    if (tab === 'settings') { renderSettingsLeagues(); }
 }
 
 function renderLeagues() {
@@ -503,17 +457,6 @@ function switchMode(mode, btn) {
     $('confidenceLabel').textContent = '0%';
     $('confidenceFill').style.width = '0%';
     if (safeNum($('homeGoals').value) > 0 || safeNum($('awayGoals').value) > 0 || (state.h2hData && state.h2hData.length > 0)) calculate();
-}
-
-function trackAPI() {
-    var today = new Date().toDateString();
-    if (state.lastReset !== today) {
-        state.apiCalls = 0;
-        state.lastReset = today;
-        localStorage.setItem('quantum_reset', today);
-    }
-    state.apiCalls++;
-    localStorage.setItem('quantum_api_calls', state.apiCalls);
 }
 
 async function loadH2H() {
@@ -583,7 +526,6 @@ async function loadH2H() {
             };
         });
         state.h2hData = matches;
-        trackAPI();
         var total = matches.length;
         var ozCount = 0;
         for (var i = 0; i < matches.length; i++) { if (matches[i].oz) ozCount++; }
@@ -1017,7 +959,7 @@ function importData(event) {
 }
 
 // ================================================================
-// ==== AI (TensorFlow.js) ====
+// ==== AI (TensorFlow.js) — УПРОЩЁННАЯ ВЕРСИЯ ====
 // ================================================================
 
 class QuantumAI {
@@ -1177,13 +1119,6 @@ async function enhanceWithML(predHome, predAway, bkLine, conf) {
     if (ml !== null && ml >= 0 && ml <= 1) {
         var w = Math.min(0.4, 0.1 + (quantumAI.accuracy * 0.3));
         var newConf = Math.round(Math.max(0, Math.min(100, (conf / 100) * (1 - w) + ml * w)));
-        var sec = $('mlSection');
-        var disp = $('aiMLConfidence');
-        if (sec) sec.style.display = 'block';
-        if (disp) {
-            disp.textContent = Math.round(ml * 100) + '% (вес ' + Math.round(w * 100) + '%)';
-            disp.style.color = ml > 0.6 ? '#2ecc71' : '#f1c40f';
-        }
         return newConf;
     }
     return conf;
@@ -1298,7 +1233,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     console.log('⚛️ КВАНТУМ 2.3 AI ЗАГРУЖЕН');
     console.log('✅ Прокси:', PROXY);
-    console.log('✅ API ключ:', API_KEY);
 });
 </script>
 </body>
